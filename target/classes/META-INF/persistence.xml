@@ -9,6 +9,7 @@
 		<!--  Poner clases que voy a usar -->
 		<class>entities.Estudiante</class>
 		<class>entities.Carreras</class>
+		<class>entities.Registro</class>
 		
 		<properties>
 			

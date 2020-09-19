@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Carrera {
@@ -19,14 +20,17 @@ public class Carrera {
 	@Column
 	private String nombre;
 	
-	@ManyToMany(mappedBy="carreras", fetch=FetchType.LAZY)
-	private List<Estudiante> estudiantes;
+	@OneToMany(mappedBy="carrera")
+	private List<Registro> estudiantes;
 
 	public Carrera(String nombre) {
 		this.nombre = nombre;
-		this.estudiantes = new ArrayList<Estudiante>();
+		this.estudiantes = new ArrayList<Registro>();
 	}
-
+	
+	public Carrera() {
+		super();
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -39,11 +43,11 @@ public class Carrera {
 		return this.id;
 	}
 
-	public List<Estudiante> getEstudiantes() {
+	public List<Registro> getEstudiantes() {
 		return estudiantes;
 	}
 
-	public void setEstudiantes(List<Estudiante> estudiantes) {
+	public void setEstudiantes(List<Registro> estudiantes) {
 		this.estudiantes = estudiantes;
 	}
 	

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -33,10 +34,12 @@ public class Estudiante {
 	@Column
 	private int libreta;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<Carrera> carreras;
+	@OneToMany(mappedBy="estudiante")
+	private List<Registro> carreras;
 	
-	
+	public Estudiante() {
+		super();		
+	}
 	
 	public Estudiante(String nombre, String apellido, int edad, String genero, int documento, String ciudad,
 			int libreta) {
@@ -47,9 +50,10 @@ public class Estudiante {
 		this.documento = documento;
 		this.ciudad = ciudad;
 		this.libreta = libreta;
-		this.carreras = new ArrayList<Carrera>();
+		this.carreras = new ArrayList<Registro>();
 		
 	}
+	
 
 	public int getId() {
 		return id;
@@ -111,14 +115,20 @@ public class Estudiante {
 		this.libreta = libreta;
 	}
 
-	public List<Carrera> getCarreras() {
+	public List<Registro> getCarreras() {
 		return carreras;
 	}
 
-	public void setCarreras(List<Carrera> carreras) {
+	public void setCarreras(List<Registro> carreras) {
 		this.carreras = carreras;
 	}
+
+	@Override
+	public String toString() {
+		return "Estudiante [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", genero="
+				+ genero + ", documento=" + documento + ", ciudad=" + ciudad + ", libreta=" + libreta + ", carreras="
+				+ carreras + "]";
+	}
 	
-	//Graduo o no
-	// antiguedad en carreras
+	 
 }

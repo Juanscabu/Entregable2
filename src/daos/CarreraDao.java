@@ -3,6 +3,7 @@ package daos;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import entities.Carrera;
 import entities.Estudiante;
 
 public class CarreraDao {
@@ -12,17 +13,25 @@ public class CarreraDao {
 		this.emf = emf;
 	}
 	
-	public void AddEstudiante (int id,String nombre, String apellido, int edad, String genero, int documento, String ciudad,
-			int libreta) {
+	public void AddCarrera (Carrera c) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		 Estudiante e = em.find(Estudiante.class,id);
-			System.out.println(e);
-		    e = new Estudiante(nombre,apellido,edad,genero,documento,ciudad,libreta);
-		    em.persist(e);
-		    em.getTransaction().commit(); // no se si se guarda
+		 	//c = em.find(Carrera.class,1);
+		    em.persist(c);
+		    em.getTransaction().commit();
 		    em.close();
 		//
+		
+	}
+	
+	public Carrera getCarrera () {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		Carrera e = em.find(Carrera.class,3);
+		System.out.println(e);
+		em.getTransaction().commit();
+		em.close();
+		return e;
 		
 	}
 	
