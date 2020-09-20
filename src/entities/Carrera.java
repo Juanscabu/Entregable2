@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -20,11 +19,15 @@ public class Carrera {
 	@Column
 	private String nombre;
 	
-	@OneToMany(mappedBy="carrera")
+	@Column
+	private int cantInscriptos;
+	
+	@OneToMany(mappedBy="carrera",fetch=FetchType.EAGER)
 	private List<Registro> estudiantes;
 
 	public Carrera(String nombre) {
 		this.nombre = nombre;
+		this.cantInscriptos = 0;
 		this.estudiantes = new ArrayList<Registro>();
 	}
 	
@@ -49,6 +52,19 @@ public class Carrera {
 
 	public void setEstudiantes(List<Registro> estudiantes) {
 		this.estudiantes = estudiantes;
+	}
+
+	public int getCantInscriptos() {
+		return cantInscriptos;
+	}
+
+	public void setCantInscriptos(int cantInscriptos) {
+		this.cantInscriptos = cantInscriptos;
+	}
+
+	@Override
+	public String toString() {
+		return "Carrera [id=" + id + ", nombre=" + nombre + ", cantInscriptos=" + cantInscriptos + "]";
 	}
 	
 	

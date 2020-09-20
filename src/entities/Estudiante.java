@@ -5,21 +5,18 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 
 @Entity
 public class Estudiante {
+	
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-	private int id;
+	private int libreta;
+	
 	@Column
 	private String nombre;
-	
 
 	@Column
 	private String apellido;
@@ -31,32 +28,23 @@ public class Estudiante {
 	private int documento;
 	@Column
 	private String ciudad;
-	@Column
-	private int libreta;
-	
-	@OneToMany(mappedBy="estudiante")
+
+	@OneToMany(mappedBy="estudiante",fetch=FetchType.EAGER)
 	private List<Registro> carreras;
 	
 	public Estudiante() {
 		super();		
 	}
 	
-	public Estudiante(String nombre, String apellido, int edad, String genero, int documento, String ciudad,
-			int libreta) {
+	public Estudiante(String nombre, String apellido, int edad, String genero, int documento, String ciudad,int libreta) {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.edad = edad;
 		this.genero = genero;
 		this.documento = documento;
 		this.ciudad = ciudad;
-		this.libreta = libreta;
 		this.carreras = new ArrayList<Registro>();
-		
-	}
-	
-
-	public int getId() {
-		return id;
+		this.libreta = libreta;
 	}
 
 	public String getNombre() {
@@ -111,9 +99,6 @@ public class Estudiante {
 		return libreta;
 	}
 
-	public void setLibreta(int libreta) {
-		this.libreta = libreta;
-	}
 
 	public List<Registro> getCarreras() {
 		return carreras;
@@ -125,10 +110,11 @@ public class Estudiante {
 
 	@Override
 	public String toString() {
-		return "Estudiante [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", genero="
-				+ genero + ", documento=" + documento + ", ciudad=" + ciudad + ", libreta=" + libreta + ", carreras="
-				+ carreras + "]";
+		return "Estudiante [libreta=" + libreta + ", nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad
+				+ ", genero=" + genero + ", documento=" + documento + ", ciudad=" + ciudad
+				+ "]";
 	}
+
 	
 	 
 }

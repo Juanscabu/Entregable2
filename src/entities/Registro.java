@@ -6,83 +6,86 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 @Entity
 public class Registro implements Serializable{
-		private static final long serialVersionUID = -7881603150879655580L;
-		@Id
-		@MapsId
-		@ManyToOne
-		private Estudiante estudiante;
-		@Id
-		@MapsId
-		@ManyToOne
-		private Carrera carrera;
-		@Column
-		private boolean termino;
-		@Column
-		private int inscripcion;
-		@Column
-		private int graduacion;
-		
-		public Registro() {
-			super();
-		}
+	private static final long serialVersionUID = -7881603150879655580L;
+	@Id
+	@MapsId
+	@ManyToOne
+	private Estudiante estudiante;
+	@Id
+	@MapsId
+	@ManyToOne
+	private Carrera carrera;
+	@Column
+	private boolean termino;
+	@Column
+	private int inscripcion;
+	@Column
+	private int graduacion;
 
-		public Registro(Estudiante estudiante, Carrera carrera, int inscripcion) {
-			super();
-			this.estudiante = estudiante;
-			this.carrera = carrera;
-			this.termino = false;
-			this.inscripcion = inscripcion;
-			this.graduacion = 0;
-		}
+	public Registro() {
+		super();
+	}
 
-		public Estudiante getEstudiante() {
-			return estudiante;
-		}
+	public Registro(Estudiante estudiante, Carrera carrera, int inscripcion) {
+		super();
+		this.estudiante = estudiante;
+		this.carrera = carrera;
+		this.termino = false;
+		this.inscripcion = inscripcion;
+		this.graduacion = 0;
+	}
 
-		public void setEstudiante(Estudiante estudiante) {
-			this.estudiante = estudiante;
-		}
+	public Estudiante getEstudiante() {
+		return estudiante;
+	}
 
-		public Carrera getCarrera() {
-			return carrera;
-		}
+	public void setEstudiante(Estudiante estudiante) {
+		this.estudiante = estudiante;
+	}
 
-		public void setCarrera(Carrera carrera) {
-			this.carrera = carrera;
-		}
+	public Carrera getCarrera() {
+		return carrera;
+	}
 
-		public boolean isTermino() {
-			return termino;
-		}
+	public void setCarrera(Carrera carrera) {
+		this.carrera = carrera;
+	}
 
-		public void setTermino(boolean termino) {
-			this.termino = termino;
-		}
+	public boolean isTermino() {
+		return termino;
+	}
 
-		public int getInscripcion() {
-			return inscripcion;
-		}
+	public void setTermino(boolean termino) {
+		this.termino = termino;
+	}
 
-		public void setInscripcion(int inscripcion) {
-			this.inscripcion = inscripcion;
-		}
+	public int getInscripcion() {
+		return inscripcion;
+	}
 
-		public int getGraduacion() {
-			return graduacion;
-		}
+	public void setInscripcion(int inscripcion) {
+		this.inscripcion = inscripcion;
+	}
 
-		public void setGraduacion(int graduacion) {
-			this.graduacion = graduacion;
-		}
-		
-		
-		
+	public int getGraduacion() {
+		return graduacion;
+	}
+
+	public void setGraduacion(int graduacion) {
+		this.graduacion = graduacion;
+	}
+
+	@Override
+	public String toString() {
+		return "Registro [estudiante=" + estudiante + ", carrera=" + carrera + ", termino=" + termino
+				+ ", inscripcion=" + inscripcion + ", graduacion=" + graduacion + "]";
+	}
+
+
+
 }
