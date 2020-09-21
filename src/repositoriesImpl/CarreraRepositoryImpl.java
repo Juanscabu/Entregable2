@@ -15,8 +15,8 @@ public class CarreraRepositoryImpl {
 	}
 	
 	public Carrera AddCarrera (Carrera c) {
-		TypedQuery<Carrera> query = em.createQuery("SELECT c FROM Carrera c WHERE id = ?1", Carrera.class);
-			query.setParameter(1,c.getId());
+		TypedQuery<Carrera> query = em.createQuery("SELECT c FROM Carrera c WHERE nombre = ?1", Carrera.class);
+			query.setParameter(1,c.getNombre());
 			List<Carrera> resultados = query.getResultList();
 			@SuppressWarnings("unused")
 			Carrera existeCarrera = null;
@@ -24,7 +24,7 @@ public class CarreraRepositoryImpl {
 				return existeCarrera = (Carrera) resultados.get(0);
 			}
 		    em.persist(c);
-		    em.getTransaction().commit();
+		
 			return c;		
 	}
 	

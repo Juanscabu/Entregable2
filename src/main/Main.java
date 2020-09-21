@@ -1,11 +1,18 @@
 package main;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 import entities.Carrera;
 import entities.Estudiante;
@@ -15,7 +22,7 @@ import repositoriesImpl.RegistroRepositoryImpl;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Example");
 		EntityManager emE = emf.createEntityManager();
 		EntityManager emC = emf.createEntityManager();
@@ -24,33 +31,65 @@ public class Main {
 		CarreraRepositoryImpl c = new CarreraRepositoryImpl(emC);
 		RegistroRepositoryImpl r = new RegistroRepositoryImpl(emR);
 		
+		CSVParser estudiantes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/estudiantes.csv"));
+		CSVParser carreras = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/carreras.csv"));
 		
-		Estudiante e1 = new Estudiante("Juan", "Scabuzzo", 25, "Masculino", 38925738, "Azul",1387);		
-		e.addEstudiante(e1);
-		Estudiante e2 = new Estudiante("Mati", "Villegas", 25, "Masculino", 3892212, "Tandil", 1372);
-		e.addEstudiante(e2);
-		//Getters 
-		//e.getEstudiantesGenero();
+		//2A)
+		cargarEstudiantes(estudiantes,e,emE);
+		cargarCarreras(carreras,c,emC);
 		
-		//e.getEstudiantes();
+		//2B
+		//r.matricularEstudiante(e.getEstudiante(1387),c.getCarrera(1), 2019);
+		
+		//2C 
+		//System.out.println(e.getEstudiantes());
+		
+		//2D
 		//System.out.println(e.getEstudiante(1387));
-		//Carrera TUDAI = new Carrera("TUDAI");
-		//Carrera ingenieria = c.getCarrera(1);
-		//c.AddCarrera(TUDAI);
-		//Carrera c1 = c.getCarrera(1);
-		//c.AddCarrera(c1);
-		//Carrera TUDAI = c.getCarrera(2);
-		//r.matricularEstudiante(e.getEstudiante(1387),ingenieria, 2019);
-		//r.matricularEstudiante(e.getEstudiante(1372),TUDAI,2018);
-		//List<Carrera> carreras = c.getCarrerasCantInscriptos();
-		//List<Estudiante> estudiantes = e.getEstudiantesCarrera(c1,"Azul");
-		List<Carrera> carreras = c.getReporteCarreras();
-		carreras.forEach(p -> System.out.println(p));
-		//estudiantes.forEach(p -> System.out.println(p));
+		
+		//2E
+		//e.getEstudiantesGenero("Masculino");
+		
+		//2F
+		//List<Carrera> carrerasCantInscriptos = c.getCarrerasCantInscriptos();
+		//carrerasCantInscriptos.forEach(p -> System.out.println(p));
+		
+		//2G
+		//List<Estudiante> estudiantesCarrera = e.getEstudiantesCarrera(c1,"Azul"); //ver si pasamos de carrera a id
+		//estudiantesCarrera.forEach(p -> System.out.println(p));
+		
+		//3
+		//List<Carrera> listarCarreras = c.getReporteCarreras();
+		//listarCarreras.forEach(p -> System.out.println(p));
+		
 		emE.close();
 		emC.close();
 		emR.close();
 		emf.close();
+	}
+
+	private static void cargarCarreras(CSVParser carreras, CarreraRepositoryImpl c,EntityManager emC) {
+		for(CSVRecord row: carreras) {
+			String nombre = row.get("nombre");
+			Carrera carrera = new Carrera(nombre);
+			c.AddCarrera(carrera);
+			}
+	    emC.getTransaction().commit();
+	}
+
+	private static void cargarEstudiantes(CSVParser estudiantes, EstudianteRepositoryImpl e,EntityManager emE) {
+		for(CSVRecord row: estudiantes) {
+			String nombre = row.get("nombre");
+			String apellido = row.get("apellido");
+			int edad =  Integer.parseInt(row.get("edad"));
+			String genero = row.get("genero");
+			int documento = Integer.parseInt(row.get("documento"));
+			String ciudad = row.get("ciudad");
+			int libreta = Integer.parseInt( row.get("libreta"));
+			Estudiante estudiante = new Estudiante(nombre,apellido,edad,genero,documento,ciudad,libreta);
+			e.addEstudiante(estudiante);
+			}
+		emE.getTransaction().commit();
 	}
   
 }

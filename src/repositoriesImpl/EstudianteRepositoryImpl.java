@@ -29,7 +29,6 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 			return existeEstudiante = (Estudiante) resultados.get(0);
 		}
 		em.persist(e);
-		em.getTransaction().commit();
 		return e;		
 	}
 

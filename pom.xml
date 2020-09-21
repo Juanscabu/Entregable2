@@ -14,6 +14,11 @@
     <artifactId>hibernate-entitymanager</artifactId>
     <version>5.4.21.Final</version>
 </dependency>
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-csv</artifactId>
+    <version>1.8</version>
+</dependency>
   </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>

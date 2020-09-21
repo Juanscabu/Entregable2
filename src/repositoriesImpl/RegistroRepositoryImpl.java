@@ -22,7 +22,8 @@ private EntityManager em;
 		 	Estudiante e1 = em.find(Estudiante.class,e.getLibreta());
 		 	//agregar VALIDACION REGISTRO
 		 	if (c1 != null && e1 != null) {
-		 	Query query = em.createQuery("UPDATE Carrera c SET c.cantInscriptos = c.cantInscriptos+1");
+		 	Query query = em.createQuery("UPDATE Carrera c SET c.cantInscriptos = c.cantInscriptos+1 WHERE id=?1");
+		 	query.setParameter(1,c.getId());
 		 	query.executeUpdate();
 			Registro r = new Registro (e,c,a);
 		    em.persist(r);
