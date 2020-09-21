@@ -1,4 +1,4 @@
-package main;
+package sistemaAcademico;
 
 
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ import repositoriesImpl.CarreraRepositoryImpl;
 import repositoriesImpl.EstudianteRepositoryImpl;
 import repositoriesImpl.RegistroRepositoryImpl;
 
-public class Main {
+public class Sistema {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Example");
@@ -39,28 +39,31 @@ public class Main {
 		cargarCarreras(carreras,c,emC);
 		
 		//2B
-		//r.matricularEstudiante(e.getEstudiante(1387),c.getCarrera(1), 2019);
+		r.matricularEstudiante(e.getEstudiante(1387),c.getCarrera(1), 2019);
+	    emR.getTransaction().commit();;
 		
 		//2C 
-		//System.out.println(e.getEstudiantes());
+		System.out.println("lista de estudiantes por nombre " + e.getEstudiantes());
 		
 		//2D
-		//System.out.println(e.getEstudiante(1387));
+		System.out.println("estudiante por libreta " + e.getEstudiante(1387));
 		
 		//2E
-		//e.getEstudiantesGenero("Masculino");
+		List<Estudiante> estudiantesPorGenero = e.getEstudiantesGenero("Masculino");
+		estudiantesPorGenero.forEach(p -> System.out.println(p));
 		
 		//2F
-		//List<Carrera> carrerasCantInscriptos = c.getCarrerasCantInscriptos();
-		//carrerasCantInscriptos.forEach(p -> System.out.println(p));
+		List<Carrera> carrerasCantInscriptos = c.getCarrerasCantInscriptos();
+		carrerasCantInscriptos.forEach(p -> System.out.println(p));
 		
 		//2G
-		//List<Estudiante> estudiantesCarrera = e.getEstudiantesCarrera(c1,"Azul"); //ver si pasamos de carrera a id
-		//estudiantesCarrera.forEach(p -> System.out.println(p));
+		//emR.getTransaction().begin();
+		List<Estudiante> estudiantesCarrera = e.getEstudiantesCarrera(c.getCarrera(2),"Azul");
+		estudiantesCarrera.forEach(p -> System.out.println(p));
 		
 		//3
-		//List<Carrera> listarCarreras = c.getReporteCarreras();
-		//listarCarreras.forEach(p -> System.out.println(p));
+		List<Carrera> listarCarreras = c.getReporteCarreras();
+		listarCarreras.forEach(p -> System.out.println(p));
 		
 		emE.close();
 		emC.close();
@@ -72,7 +75,7 @@ public class Main {
 		for(CSVRecord row: carreras) {
 			String nombre = row.get("nombre");
 			Carrera carrera = new Carrera(nombre);
-			c.AddCarrera(carrera);
+			c.addCarrera(carrera);
 			}
 	    emC.getTransaction().commit();
 	}

@@ -5,8 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import entities.Carrera;
+import repositories.CarreraRepository;
 
-public class CarreraRepositoryImpl {
+public class CarreraRepositoryImpl implements CarreraRepository {
 	private EntityManager em;
 	
 	public CarreraRepositoryImpl(EntityManager em) {
@@ -14,7 +15,7 @@ public class CarreraRepositoryImpl {
 		this.em.getTransaction().begin();
 	}
 	
-	public Carrera AddCarrera (Carrera c) {
+	public Carrera addCarrera (Carrera c) {
 		TypedQuery<Carrera> query = em.createQuery("SELECT c FROM Carrera c WHERE nombre = ?1", Carrera.class);
 			query.setParameter(1,c.getNombre());
 			List<Carrera> resultados = query.getResultList();
@@ -24,7 +25,6 @@ public class CarreraRepositoryImpl {
 				return existeCarrera = (Carrera) resultados.get(0);
 			}
 		    em.persist(c);
-		
 			return c;		
 	}
 	
