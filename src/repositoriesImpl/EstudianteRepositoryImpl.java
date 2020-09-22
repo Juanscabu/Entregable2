@@ -12,7 +12,6 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
 
 	public EstudianteRepositoryImpl(EntityManager em) {
 		this.em = em;
-		this.em.getTransaction().begin();
 	}
 
 	public EstudianteRepositoryImpl() {

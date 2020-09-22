@@ -24,23 +24,21 @@ public class Sistema {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Example");
-		EntityManager emE = emf.createEntityManager();
-		EntityManager emC = emf.createEntityManager();
-		EntityManager emR = emf.createEntityManager();
-		EstudianteRepositoryImpl e = new EstudianteRepositoryImpl(emE);
-		CarreraRepositoryImpl c = new CarreraRepositoryImpl(emC);
-		RegistroRepositoryImpl r = new RegistroRepositoryImpl(emR);
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		EstudianteRepositoryImpl e = new EstudianteRepositoryImpl(em);
+		CarreraRepositoryImpl c = new CarreraRepositoryImpl(em);
+		RegistroRepositoryImpl r = new RegistroRepositoryImpl(em);
 		
 		CSVParser estudiantes = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/estudiantes.csv"));
 		CSVParser carreras = CSVFormat.DEFAULT.withHeader().parse(new FileReader("./csv/carreras.csv"));
 		
 		//2A)
-		cargarEstudiantes(estudiantes,e,emE);
-		cargarCarreras(carreras,c,emC);
+		cargarEstudiantes(estudiantes,e,em);
+		cargarCarreras(carreras,c,em);
 		
 		//2B
 		r.matricularEstudiante(e.getEstudiante(1387),c.getCarrera(1), 2019);
-	    emR.getTransaction().commit();;
 		
 		//2C 
 		System.out.println("lista de estudiantes por nombre " + e.getEstudiantes());
@@ -57,17 +55,14 @@ public class Sistema {
 		carrerasCantInscriptos.forEach(p -> System.out.println(p));
 		
 		//2G
-		//emR.getTransaction().begin();
-		List<Estudiante> estudiantesCarrera = e.getEstudiantesCarrera(c.getCarrera(2),"Azul");
-		estudiantesCarrera.forEach(p -> System.out.println(p));
+		List<Estudiante> estudiantesCarrera = e.getEstudiantesCarrera(c.getCarrera(1),"Azul");
+		estudiantesCarrera.forEach(p -> System.out.println("estudiante en el id carrera " + p));
 		
 		//3
 		List<Carrera> listarCarreras = c.getReporteCarreras();
 		listarCarreras.forEach(p -> System.out.println(p));
-		
-		emE.close();
-		emC.close();
-		emR.close();
+		em.getTransaction().commit();
+		em.close();
 		emf.close();
 	}
 
@@ -77,7 +72,6 @@ public class Sistema {
 			Carrera carrera = new Carrera(nombre);
 			c.addCarrera(carrera);
 			}
-	    emC.getTransaction().commit();
 	}
 
 	private static void cargarEstudiantes(CSVParser estudiantes, EstudianteRepositoryImpl e,EntityManager emE) {
@@ -92,7 +86,6 @@ public class Sistema {
 			Estudiante estudiante = new Estudiante(nombre,apellido,edad,genero,documento,ciudad,libreta);
 			e.addEstudiante(estudiante);
 			}
-		emE.getTransaction().commit();
 	}
   
 }

@@ -82,8 +82,8 @@ public class Registro implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Registro [estudiante=" + estudiante + ", carrera=" + carrera + ", termino=" + termino
-				+ ", inscripcion=" + inscripcion + ", graduacion=" + graduacion + "]";
+		return "estudiante=" + estudiante + ", carrera=" + carrera + ", termino=" + termino
+				+ ", inscripcion=" + inscripcion + ", graduacion=" + graduacion;
 	}
 
 

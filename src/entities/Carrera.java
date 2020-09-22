@@ -64,7 +64,7 @@ public class Carrera {
 
 	@Override
 	public String toString() {
-		return "Carrera [id=" + id + ", nombre=" + nombre + ", cantInscriptos=" + cantInscriptos + "]";
+		return "id=" + id + ", nombre=" + nombre + ", cantInscriptos=" + cantInscriptos;
 	}
 	
 	

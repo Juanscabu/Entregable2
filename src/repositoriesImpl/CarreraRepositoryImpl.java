@@ -12,7 +12,6 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 	
 	public CarreraRepositoryImpl(EntityManager em) {
 		this.em = em;
-		this.em.getTransaction().begin();
 	}
 	
 	public Carrera addCarrera (Carrera c) {

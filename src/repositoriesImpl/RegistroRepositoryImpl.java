@@ -14,7 +14,6 @@ private EntityManager em;
 	
 	public RegistroRepositoryImpl(EntityManager em) {
 		this.em = em;
-		this.em.getTransaction().begin();
 	}
 	
 	public boolean matricularEstudiante(Estudiante e, Carrera c, int a) {
